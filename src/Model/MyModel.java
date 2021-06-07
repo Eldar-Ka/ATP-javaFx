@@ -69,11 +69,11 @@ public class MyModel extends Observable implements IModel{
                         MyMazeGenerator mg = new MyMazeGenerator();
                         toServer.writeObject(maze); //send maze to server
                         toServer.flush();
-                        Solution mazeSolution = (Solution) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
+                        sol = (Solution) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
 
 //Print Maze Solution retrieved from the server
-                        System.out.println(String.format("Solution steps:%s", mazeSolution));
-                        ArrayList<AState> mazeSolutionSteps = mazeSolution.getSolutionPath();
+                        System.out.println(String.format("Solution steps:%s", sol));
+                        ArrayList<AState> mazeSolutionSteps = sol.getSolutionPath();
                         for (int i = 0; i < mazeSolutionSteps.size(); i++) {
                             System.out.println(String.format("%s. %s", i, mazeSolutionSteps.get(i).toString()));
                         }
@@ -88,7 +88,7 @@ public class MyModel extends Observable implements IModel{
 
     @Override
     public Solution getSol() {
-        return null;
+        return sol;
     }
 
     @Override

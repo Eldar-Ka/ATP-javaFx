@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class MazeDisplayer extends Canvas {
     private int playerRow=0;
     private int playerCol=0;
-    private Solution sol;
+    private Solution sol=null;
     private Maze m;
     private  int[][] matrix;
     private StringProperty imageFileNameWall = new SimpleStringProperty();
@@ -84,7 +84,7 @@ public class MazeDisplayer extends Canvas {
             graphicsContext.clearRect(0,0,canvasW,canvasH);
             drawMazeWalls(graphicsContext,rows,cols,cellH,cellW);
             if (sol!=null)
-                drawSol(graphicsContext,cellH,cellW,sol);
+                    drawSol(graphicsContext, cellH, cellW);
             drawMazePlayer(graphicsContext,cellH,cellW);
 
         }
@@ -115,19 +115,40 @@ public class MazeDisplayer extends Canvas {
 
     }
 
-    private void drawSol(GraphicsContext graphicsContext, double cellH, double cellW,Solution solution) {
+    private void drawSol(GraphicsContext graphicsContext, double cellH, double cellW) {
+        int i=0,j=0;
+        int[][] mat = m.getMaze();
+        ArrayList<AState> path = sol.getSolutionPath();
+        Image wallImg=null;
         try {
-            double x ;
-            double y ;
-            graphicsContext.setFill(Color.BLUE);
-            for (AState s:solution.getSolutionPath()) {
-                x=((MazeState)s).getPos().getRowIndex()*cellH;
-                y=((MazeState)s).getPos().getColumnIndex()*cellW;
-                graphicsContext.fillRect(x,y, cellW,cellH);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            wallImg=new Image(new FileInputStream(getImgFileNameWall()));
+        } catch (FileNotFoundException e) {
+            System.out.println("file missing");
         }
+        graphicsContext.setFill(Color.BLUE);
+
+        for ( i = 0; i < mat.length; i++) {
+            for ( j = 0; j < mat[i].length; j++) {
+                //AState p = new MazeState(null, m, new Position(i, j));
+                double x= j*cellW;
+                double y=i*cellH;
+                if (matrix[i][j]==1){
+                    if(wallImg==null)
+                        graphicsContext.fillRect(x,y, cellW,cellH);
+                    else
+                        graphicsContext.drawImage(wallImg,x,y,cellW,cellH);
+                }
+                for (int k = 0; k < path.size(); k++) {
+                    if (path.get(k).toString().equals("{"+i+","+j+"}")) {
+                        System.out.println("test");
+                        graphicsContext.fillRect(x, y, cellW, cellH);
+                    }
+                }
+            }
+        }
+        graphicsContext.setFill(Color.GREEN);
+        graphicsContext.fillRect(0,0, cellW,cellH);
+        graphicsContext.fillRect((i-1)*cellW,(j-1)*cellH, cellW,cellH);
         sol = null;
     }
 
