@@ -27,11 +27,8 @@ public class MazeDisplayer extends Canvas {
     private  int[][] matrix;
     private StringProperty imageFileNameWall = new SimpleStringProperty();
     private StringProperty imageFileNamePlayer = new SimpleStringProperty();
-    //private StringProperty ImageFileNameSolution = new SimpleStringProperty();
-    private Image solutionPathImage;
-    private Image wallImage;
-    private Image playerImage;
-    public static MediaPlayer mediaPlayer;
+    private StringProperty imageFileNameWin = new SimpleStringProperty();
+    //private Image imageFileNameWin;
 
     public String getImageFileNameWall() {
         return imageFileNameWall.get();
@@ -43,6 +40,17 @@ public class MazeDisplayer extends Canvas {
 
     public String getImageFileNamePlayer() {
         return imageFileNamePlayer.get();
+    }
+
+    public String getImageFileNameWin() {
+        return imageFileNameWin.get();
+    }
+    public void setImageFileNameWin(String imageFileNameWin) {
+        this.imageFileNameWin.set(imageFileNameWin);
+    }
+
+    public int[][] getMatrix() {
+        return matrix;
     }
 
     public void setImageFileNamePlayer(String imageFileNamePlayer) {
@@ -89,6 +97,8 @@ public class MazeDisplayer extends Canvas {
             drawMazeWalls(graphicsContext,rows,cols,cellH,cellW);
             if (sol!=null)
                     drawSol(graphicsContext, cellH, cellW);
+            if (getPlayerRow()==matrix.length-1&&getPlayerCol()==matrix[0].length-1)
+                drawMazeWin(graphicsContext);
             drawMazePlayer(graphicsContext,cellH,cellW);
 
         }
@@ -153,7 +163,15 @@ public class MazeDisplayer extends Canvas {
         graphicsContext.fillRect((i-1)*cellW,(j-1)*cellH, cellW,cellH);
         sol = null;
     }
-
+    private void drawMazeWin(GraphicsContext graphicsContext) {
+        Image winImg=null;
+        try {
+            winImg=new Image(new FileInputStream(getImageFileNameWin()));
+        } catch (FileNotFoundException e) {
+            System.out.println("file missing");
+        }
+        graphicsContext.drawImage(winImg,getHeight()/4,getWidth()/4,(getHeight()/4)*3,(getWidth()/4)*3);
+    }
 
     private void drawMazePlayer(GraphicsContext graphicsContext, double cellH, double cellW) {
         Image playerImg=null;
@@ -169,8 +187,6 @@ public class MazeDisplayer extends Canvas {
             graphicsContext.fillRect(x,y, cellW,cellH);
         else
             graphicsContext.drawImage(playerImg,x,y,cellW,cellH);
-
-
     }
 
 }

@@ -9,14 +9,18 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+import java.io.FileInputStream;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Observable;
@@ -36,6 +40,9 @@ public class MyViewController implements IView, Observer, Initializable {
     StringProperty updatePlayerCol=new SimpleStringProperty();
     public static boolean mute=false;
     public static MediaPlayer mediaPlayer;
+    public static MediaPlayer click;
+    public static MediaPlayer vic;
+    public static ImageView imgView;
 
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
@@ -57,6 +64,9 @@ public class MyViewController implements IView, Observer, Initializable {
     }
 
     public void generateMaze(ActionEvent actionEvent) {
+        Media media=new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
+        click = new MediaPlayer(media);
+        click.play();
         int rows=Integer.valueOf(textField_mazeRows.getText());
         int cols=Integer.valueOf(textField_mazeColumns.getText());
         btn_generateMaze.setDisable(true);
@@ -72,6 +82,13 @@ public class MyViewController implements IView, Observer, Initializable {
         mazeDisplayer.setPlayerPos(row,col);
         setUpdatePlayerRow(row);
         setUpdatePlayerCol(col);
+        if (mazeDisplayer.getMatrix().length-1==row&&mazeDisplayer.getMatrix()[0].length-1==col)
+        {
+            mediaPlayer.stop();
+            Media media=new Media(Paths.get("./resources/Mp3/Victory.mp3").toUri().toString());
+            vic = new MediaPlayer(media);
+            vic.play();
+        }
     }
     public void keyPressed(KeyEvent keyEvent) {
         viewModel.movePlayer(keyEvent);
@@ -94,6 +111,9 @@ public class MyViewController implements IView, Observer, Initializable {
         }
     }
     private void mazeSolved() {
+        Media media=new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
+        click = new MediaPlayer(media);
+        click.play();
         mazeDisplayer.setSol(viewModel.getSol());
     }
 
@@ -117,8 +137,24 @@ public class MyViewController implements IView, Observer, Initializable {
     public Solution getSolution() {
         return viewModel.getSol();
     }
+    public static void onSetImage(){
+        try {
+            FileInputStream input = new FileInputStream("resources/images/winner.jpg");
+            Image image = new Image(input);
+            imgView = new ImageView(image);
+            //SET THE WHOLE IMAGE INTO IMAGEVIEW
+            Rectangle2D imagePart = new Rectangle2D(0, 0, 50, 80);
+            imgView.setViewport(imagePart);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public void MuteMusic(ActionEvent actionEvent) {
+        Media media=new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
+        click = new MediaPlayer(media);
+        click.play();
         mediaPlayer.stop();
     }
     public static void playAudio() {

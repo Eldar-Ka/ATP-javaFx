@@ -7,6 +7,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -14,9 +15,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import View.*?>
 
-<BorderPane onMouseClicked="#mouseClicked" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="585.0" prefWidth="924.0" stylesheets="@MainStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
+<?import View.MazeDisplayer?>
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#mouseClicked" prefHeight="585.0" prefWidth="924.0" stylesheets="@MainStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
     <left>
         <VBox prefHeight="200.0" prefWidth="178.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
@@ -35,16 +36,16 @@
                         <RowConstraints />
                     </rowConstraints>
                     <Label text="Maze rows:" textFill="#53ebe8" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                    <Label text="Maze columns:"  textFill="#53ebe8" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Label text="Maze columns:" textFill="#53ebe8" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <TextField fx:id="textField_mazeRows" disable="false" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                     <TextField fx:id="textField_mazeColumns" disable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     <Button fx:id="btn_generateMaze" onAction="#generateMaze" prefHeight="25.0" prefWidth="167.0" text="Generate Maze" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                    <Button fx:id="btn_solveMaze" onAction="#solveMaze" disable="true" prefHeight="25.0" prefWidth="167.0" text="Solve Maze" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                    <Button prefHeight="25.0" onAction="#MuteMusic" prefWidth="167.0" text="Mute" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                    <Label text="Player row:"  textFill="#53ebe8" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                    <Label text="Player column:"  textFill="#53ebe8" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                    <Button fx:id="btn_solveMaze" disable="true" onAction="#solveMaze" prefHeight="25.0" prefWidth="167.0" text="Solve Maze" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                    <Button onAction="#MuteMusic" prefHeight="25.0" prefWidth="167.0" text="Mute" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                    <Label text="Player row:" textFill="#53ebe8" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                    <Label text="Player column:" textFill="#53ebe8" GridPane.columnIndex="0" GridPane.rowIndex="6" />
                     <Label fx:id="lbl_playerRow" text="#" textFill="#53ebe8" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                    <Label fx:id="lbl_playerCol"  text="#" textFill="#53ebe8" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                    <Label fx:id="lbl_playerCol" text="#" textFill="#53ebe8" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                 </GridPane>
             </children>
             <padding>
@@ -101,7 +102,7 @@
                 <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
             </BorderPane.margin>
             <children>
-                <MazeDisplayer fx:id="mazeDisplayer" imageFileNameWall="./resources/Images/wall.jpg" imageFileNamePlayer="./resources/Images/red.jpg" height="400.0"  onKeyPressed="#keyPressed" width="400.0" BorderPane.alignment="CENTER" />
+                <MazeDisplayer fx:id="mazeDisplayer" height="400.0" imageFileNameWin="./resources/Images/winner.jpg" imageFileNamePlayer="./resources/Images/red.jpg" imageFileNameWall="./resources/Images/wall.jpg" onKeyPressed="#keyPressed" width="400.0" BorderPane.alignment="CENTER" />
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

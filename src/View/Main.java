@@ -30,7 +30,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("MyView.fxml"));
         Parent root = fxmlLoader.load();
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Maze game");
         primaryStage.setScene(new Scene(root, 1000, 800));
         primaryStage.show();
         IModel model = new MyModel();
@@ -38,6 +38,9 @@ public class Main extends Application {
         MyViewController view=fxmlLoader.getController();
         view.setViewModel(viewModel);
         MyViewController.playAudio();
+        MyViewController.onSetImage();
+
+
 
 
     }
