@@ -14,8 +14,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -31,6 +34,8 @@ public class MyViewController implements IView, Observer, Initializable {
     public Label lbl_playerCol;
     StringProperty updatePlayerRow=new SimpleStringProperty();
     StringProperty updatePlayerCol=new SimpleStringProperty();
+    public static boolean mute=false;
+    public static MediaPlayer mediaPlayer;
 
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
@@ -57,6 +62,7 @@ public class MyViewController implements IView, Observer, Initializable {
         btn_generateMaze.setDisable(true);
         btn_solveMaze.setDisable(false);
         viewModel.genMaze(rows,cols);
+
 
     }
     public void mouseClicked(MouseEvent mouseEvent) {
@@ -110,6 +116,16 @@ public class MyViewController implements IView, Observer, Initializable {
     }
     public Solution getSolution() {
         return viewModel.getSol();
+    }
+
+    public void MuteMusic(ActionEvent actionEvent) {
+        mediaPlayer.stop();
+    }
+    public static void playAudio() {
+        Media media=new Media(Paths.get("./resources/Mp3/StrangerThingsTitleSequence.mp3").toUri().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
     }
     /*
     public void setOnScroll(ScrollEvent scroll) {

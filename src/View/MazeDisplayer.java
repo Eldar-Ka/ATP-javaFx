@@ -10,8 +10,11 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -24,10 +27,11 @@ public class MazeDisplayer extends Canvas {
     private  int[][] matrix;
     private StringProperty imageFileNameWall = new SimpleStringProperty();
     private StringProperty imageFileNamePlayer = new SimpleStringProperty();
-    private StringProperty ImageFileNameSolution = new SimpleStringProperty();
+    //private StringProperty ImageFileNameSolution = new SimpleStringProperty();
     private Image solutionPathImage;
     private Image wallImage;
     private Image playerImage;
+    public static MediaPlayer mediaPlayer;
 
     public String getImageFileNameWall() {
         return imageFileNameWall.get();
@@ -139,10 +143,8 @@ public class MazeDisplayer extends Canvas {
                         graphicsContext.drawImage(wallImg,x,y,cellW,cellH);
                 }
                 for (int k = 0; k < path.size(); k++) {
-                    if (path.get(k).toString().equals("{"+i+","+j+"}")) {
-                        System.out.println("test");
+                    if (path.get(k).toString().equals("{"+i+","+j+"}"))
                         graphicsContext.fillRect(x, y, cellW, cellH);
-                    }
                 }
             }
         }

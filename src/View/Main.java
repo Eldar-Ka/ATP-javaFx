@@ -11,10 +11,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import javax.sound.sampled.*;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Paths;
 
 public class Main extends Application {
 
@@ -29,6 +37,8 @@ public class Main extends Application {
         MyViewModel viewModel=new MyViewModel(model);
         MyViewController view=fxmlLoader.getController();
         view.setViewModel(viewModel);
+        MyViewController.playAudio();
+
 
     }
 

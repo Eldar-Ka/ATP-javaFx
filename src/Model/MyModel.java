@@ -3,12 +3,16 @@ package Model;
 import Client.*;
 import IO.MyDecompressorInputStream;
 import Server.*;
+import View.MazeDisplayer;
+import View.MyViewController;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.AState;
 import algorithms.search.MazeState;
 import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.search.Solution;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -26,6 +30,8 @@ public class MyModel extends Observable implements IModel{
     private Server generatorServer;
     private Server solverServer;
     private boolean serversOn = false;
+    public MazeDisplayer mazeDisplayer;
+    public static MediaPlayer mediaPlayer;
     public MyModel(){
         generatorServer = new Server(5400, 1000, new ServerStrategyGenerateMaze());
         solverServer = new Server(5401, 1000, new ServerStrategySolveSearchProblem());
