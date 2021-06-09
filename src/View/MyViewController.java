@@ -33,6 +33,7 @@ public class MyViewController implements IView, Observer, Initializable {
     public MazeDisplayer mazeDisplayer;
     public Button btn_generateMaze;
     public Button btn_solveMaze;
+    public Button btn_mute;
     private MyViewModel viewModel;
     public Label lbl_playerRow;
     public Label lbl_playerCol;
@@ -64,11 +65,13 @@ public class MyViewController implements IView, Observer, Initializable {
     }
 
     public void generateMaze(ActionEvent actionEvent) {
-        Media media=new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
-        click = new MediaPlayer(media);
-        click.play();
-        int rows=Integer.valueOf(textField_mazeRows.getText());
-        int cols=Integer.valueOf(textField_mazeColumns.getText());
+        if(!mute) {
+            Media media = new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
+            click = new MediaPlayer(media);
+            click.play();
+        }
+        int rows=Integer.parseInt(textField_mazeRows.getText());
+        int cols=Integer.parseInt(textField_mazeColumns.getText());
         btn_generateMaze.setDisable(true);
         btn_solveMaze.setDisable(false);
         viewModel.genMaze(rows,cols);
@@ -84,10 +87,13 @@ public class MyViewController implements IView, Observer, Initializable {
         setUpdatePlayerCol(col);
         if (mazeDisplayer.getMatrix().length-1==row&&mazeDisplayer.getMatrix()[0].length-1==col)
         {
-            mediaPlayer.stop();
-            Media media=new Media(Paths.get("./resources/Mp3/Victory.mp3").toUri().toString());
-            vic = new MediaPlayer(media);
-            vic.play();
+            if(!mute) {
+                mediaPlayer.stop();
+                Media media = new Media(Paths.get("./resources/Mp3/Victory.mp3").toUri().toString());
+                vic = new MediaPlayer(media);
+                vic.play();
+            }
+            btn_solveMaze.setDisable(true);
         }
     }
     public void keyPressed(KeyEvent keyEvent) {
@@ -111,9 +117,11 @@ public class MyViewController implements IView, Observer, Initializable {
         }
     }
     private void mazeSolved() {
-        Media media=new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
-        click = new MediaPlayer(media);
-        click.play();
+        if(!mute) {
+            Media media = new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
+            click = new MediaPlayer(media);
+            click.play();
+        }
         mazeDisplayer.setSol(viewModel.getSol());
     }
 
@@ -152,10 +160,18 @@ public class MyViewController implements IView, Observer, Initializable {
     }
 
     public void MuteMusic(ActionEvent actionEvent) {
-        Media media=new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
-        click = new MediaPlayer(media);
-        click.play();
-        mediaPlayer.stop();
+        if(!mute) {
+            mute = true;
+            btn_mute.textProperty().setValue("UnMute");
+            mediaPlayer.stop();
+        }else{
+            Media media = new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
+            click = new MediaPlayer(media);
+            click.play();
+            mediaPlayer.play();
+            mute = false;
+            btn_mute.textProperty().setValue("Mute");
+        }
     }
     public static void playAudio() {
         Media media=new Media(Paths.get("./resources/Mp3/StrangerThingsTitleSequence.mp3").toUri().toString());
