@@ -29,16 +29,22 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("MyView.fxml"));
+        FXMLLoader mainMenufxmlLoader=new FXMLLoader(getClass().getResource("MainMenuView.fxml"));
         Parent root = fxmlLoader.load();
+        Parent menu = mainMenufxmlLoader.load();
         primaryStage.setTitle("Maze game");
         primaryStage.setScene(new Scene(root, 1000, 800));
         primaryStage.show();
+        //MainMenuController.playAudio();
+
         IModel model = new MyModel();
         MyViewModel viewModel=new MyViewModel(model);
         MyViewController view=fxmlLoader.getController();
+        MainMenuController menuViwe=mainMenufxmlLoader.getController();
         view.setViewModel(viewModel);
         MyViewController.playAudio();
         MyViewController.onSetImage();
+
 
 
 

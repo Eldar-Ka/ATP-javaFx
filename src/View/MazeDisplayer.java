@@ -28,7 +28,6 @@ public class MazeDisplayer extends Canvas {
     private StringProperty imageFileNameWall = new SimpleStringProperty();
     private StringProperty imageFileNamePlayer = new SimpleStringProperty();
     private StringProperty imageFileNameWin = new SimpleStringProperty();
-    //private Image imageFileNameWin;
 
     public String getImageFileNameWall() {
         return imageFileNameWall.get();
