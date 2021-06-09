@@ -23,6 +23,7 @@ public class MazeDisplayer extends Canvas {
     private int playerRow=0;
     private int playerCol=0;
     private int prevPlayerCol=0;
+    private String prevPlayerDirection=null;
     private Solution sol=null;
     private Maze m;
     private  int[][] matrix;
@@ -30,6 +31,7 @@ public class MazeDisplayer extends Canvas {
     private StringProperty imageFileNamePlayer = new SimpleStringProperty();
     private StringProperty imageFileNamePlayerL = new SimpleStringProperty();
     private StringProperty imageFileNameWin = new SimpleStringProperty();
+
 
     public String getImageFileNameWall() {
         return imageFileNameWall.get();
@@ -103,25 +105,34 @@ public class MazeDisplayer extends Canvas {
             double cellW=canvasW/cols;
             GraphicsContext graphicsContext=getGraphicsContext2D();
             graphicsContext.clearRect(0,0,canvasW,canvasH);
-            drawMazeWalls(graphicsContext,rows,cols,cellH,cellW);
+
             if (sol!=null)
-                    drawSol(graphicsContext, cellH, cellW);
-            if (getPlayerRow()==matrix.length-1&&getPlayerCol()==matrix[0].length-1)
+                drawSol(graphicsContext, cellH, cellW);
+            else
+                drawMazeWalls(graphicsContext,rows,cols,cellH,cellW);
+
+            if (getPlayerRow()==matrix.length-1&&getPlayerCol()==matrix[0].length-1) {
                 drawMazeWin(graphicsContext);
-            drawMazePlayerR(graphicsContext, cellH, cellW);
-            if (prevPlayerCol>getPlayerCol()) {
+                setDisable(true);
+            }
+
+
+            if (prevPlayerDirection == null || prevPlayerCol<getPlayerCol()) {
                 prevPlayerCol=getPlayerCol();
-                drawMazePlayerL(graphicsContext, cellH, cellW);
+                prevPlayerDirection = getImageFileNamePlayer();
+                //drawMazePlayer(graphicsContext, cellH, cellW, );
             }
-            if (prevPlayerCol<getPlayerCol()) {
+            if (prevPlayerCol>getPlayerCol()) {
                 prevPlayerCol = getPlayerCol();
-                drawMazePlayerR(graphicsContext, cellH, cellW);
+                prevPlayerDirection = getImageFileNamePlayerL();
+                //drawMazePlayer(graphicsContext, cellH, cellW, getImageFileNamePlayerL());
             }
+            drawMazePlayer(graphicsContext, cellH, cellW, prevPlayerDirection);
 
         }
     }
     private void drawMazeWalls(GraphicsContext graphicsContext, int rows, int cols, double cellH, double cellW) {
-        int i=0,j=0;
+        int i,j=0;
         Image wallImg=null;
         try {
             wallImg=new Image(new FileInputStream(getImgFileNameWall()));
@@ -147,7 +158,7 @@ public class MazeDisplayer extends Canvas {
     }
 
     private void drawSol(GraphicsContext graphicsContext, double cellH, double cellW) {
-        int i=0,j=0;
+        int i,j=0;
         int[][] mat = m.getMaze();
         ArrayList<AState> path = sol.getSolutionPath();
         Image wallImg=null;
@@ -169,8 +180,8 @@ public class MazeDisplayer extends Canvas {
                     else
                         graphicsContext.drawImage(wallImg,x,y,cellW,cellH);
                 }
-                for (int k = 0; k < path.size(); k++) {
-                    if (path.get(k).toString().equals("{"+i+","+j+"}"))
+                for (AState aState : path) {
+                    if (aState.toString().equals("{" + i + "," + j + "}"))
                         graphicsContext.fillRect(x, y, cellW, cellH);
                 }
             }
@@ -190,25 +201,10 @@ public class MazeDisplayer extends Canvas {
         graphicsContext.drawImage(winImg,getHeight()/4,getWidth()/4,(getHeight()/4)*3,(getWidth()/4)*3);
     }
 
-    private void drawMazePlayerR(GraphicsContext graphicsContext, double cellH, double cellW) {
+    private void drawMazePlayer(GraphicsContext graphicsContext, double cellH, double cellW, String direction) {
         Image playerImg=null;
         try {
-            playerImg=new Image(new FileInputStream(getImgFileNamePlayer()));
-        } catch (FileNotFoundException e) {
-            System.out.println("file missing");
-        }
-        double x = getPlayerCol()*cellW;
-        double y = getPlayerRow()*cellH;
-        graphicsContext.setFill(Color.GREEN);
-        if(playerImg==null)
-            graphicsContext.fillRect(x,y, cellW,cellH);
-        else
-            graphicsContext.drawImage(playerImg,x,y,cellW,cellH);
-    }
-    private void drawMazePlayerL(GraphicsContext graphicsContext, double cellH, double cellW) {
-        Image playerImg=null;
-        try {
-            playerImg=new Image(new FileInputStream(getImageFileNamePlayerL()));
+            playerImg=new Image(new FileInputStream(direction));
         } catch (FileNotFoundException e) {
             System.out.println("file missing");
         }
