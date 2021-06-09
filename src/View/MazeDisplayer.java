@@ -22,11 +22,13 @@ import java.util.ArrayList;
 public class MazeDisplayer extends Canvas {
     private int playerRow=0;
     private int playerCol=0;
+    private int prevPlayerCol=0;
     private Solution sol=null;
     private Maze m;
     private  int[][] matrix;
     private StringProperty imageFileNameWall = new SimpleStringProperty();
     private StringProperty imageFileNamePlayer = new SimpleStringProperty();
+    private StringProperty imageFileNamePlayerL = new SimpleStringProperty();
     private StringProperty imageFileNameWin = new SimpleStringProperty();
 
     public String getImageFileNameWall() {
@@ -46,6 +48,14 @@ public class MazeDisplayer extends Canvas {
     }
     public void setImageFileNameWin(String imageFileNameWin) {
         this.imageFileNameWin.set(imageFileNameWin);
+    }
+
+    public String getImageFileNamePlayerL() {
+        return imageFileNamePlayerL.get();
+    }
+
+    public void setImageFileNamePlayerL(String imageFileNamePlayerL) {
+        this.imageFileNamePlayerL.set(imageFileNamePlayerL);
     }
 
     public int[][] getMatrix() {
@@ -98,7 +108,15 @@ public class MazeDisplayer extends Canvas {
                     drawSol(graphicsContext, cellH, cellW);
             if (getPlayerRow()==matrix.length-1&&getPlayerCol()==matrix[0].length-1)
                 drawMazeWin(graphicsContext);
-            drawMazePlayer(graphicsContext,cellH,cellW);
+            drawMazePlayerR(graphicsContext, cellH, cellW);
+            if (prevPlayerCol>getPlayerCol()) {
+                prevPlayerCol=getPlayerCol();
+                drawMazePlayerL(graphicsContext, cellH, cellW);
+            }
+            if (prevPlayerCol<getPlayerCol()) {
+                prevPlayerCol = getPlayerCol();
+                drawMazePlayerR(graphicsContext, cellH, cellW);
+            }
 
         }
     }
@@ -172,10 +190,25 @@ public class MazeDisplayer extends Canvas {
         graphicsContext.drawImage(winImg,getHeight()/4,getWidth()/4,(getHeight()/4)*3,(getWidth()/4)*3);
     }
 
-    private void drawMazePlayer(GraphicsContext graphicsContext, double cellH, double cellW) {
+    private void drawMazePlayerR(GraphicsContext graphicsContext, double cellH, double cellW) {
         Image playerImg=null;
         try {
             playerImg=new Image(new FileInputStream(getImgFileNamePlayer()));
+        } catch (FileNotFoundException e) {
+            System.out.println("file missing");
+        }
+        double x = getPlayerCol()*cellW;
+        double y = getPlayerRow()*cellH;
+        graphicsContext.setFill(Color.GREEN);
+        if(playerImg==null)
+            graphicsContext.fillRect(x,y, cellW,cellH);
+        else
+            graphicsContext.drawImage(playerImg,x,y,cellW,cellH);
+    }
+    private void drawMazePlayerL(GraphicsContext graphicsContext, double cellH, double cellW) {
+        Image playerImg=null;
+        try {
+            playerImg=new Image(new FileInputStream(getImageFileNamePlayerL()));
         } catch (FileNotFoundException e) {
             System.out.println("file missing");
         }
