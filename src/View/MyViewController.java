@@ -163,14 +163,17 @@ public class MyViewController implements IView, Observer, Initializable {
 
     public void MuteMusic(ActionEvent actionEvent) {
         if(!mute) {
+            Media media = new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
+            click = new MediaPlayer(media);
+            click.play();
             mute = true;
             btn_mute.textProperty().setValue("UnMute");
-            mediaPlayer.stop();
+            mediaPlayer.setVolume(0.0);
         }else{
             Media media = new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
             click = new MediaPlayer(media);
             click.play();
-            mediaPlayer.play();
+            mediaPlayer.setVolume(1.0);
             mute = false;
             btn_mute.textProperty().setValue("Mute");
         }
