@@ -4,6 +4,7 @@ import Model.IModel;
 import Model.MyModel;
 import ViewModel.MyViewModel;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
@@ -15,6 +16,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import javax.sound.sampled.*;
@@ -46,6 +48,10 @@ public class Main extends Application {
         MyViewController.onSetImage();
 
 
+        primaryStage.setOnCloseRequest(we -> {
+            System.out.println("Stage is closing");
+            viewModel.close();
+        });
 
 
 

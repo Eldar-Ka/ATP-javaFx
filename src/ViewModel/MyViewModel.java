@@ -54,4 +54,8 @@ public class MyViewModel extends Observable implements Observer {
         }
         model.updatePlayerLocation(direction);
     }
+
+    public void close(){
+        model.close();
+    }
 }

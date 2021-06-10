@@ -17,6 +17,7 @@
 
 <?import View.*?>
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#mouseClicked" prefHeight="585.0" prefWidth="924.0" stylesheets="@MainStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
+    <Button fx:id="closeButton"/>
     <left>
         <VBox prefHeight="200.0" prefWidth="178.0" spacing="5.0" BorderPane.alignment="CENTER">
             <children>
@@ -87,7 +88,7 @@
                         </Menu>
                         <Menu id="exitMenu" mnemonicParsing="false" text="Exit">
                             <items>
-                                <MenuItem id="exitTheGame" mnemonicParsing="false" text="exit the game " />
+                                <MenuItem id="exitTheGame" mnemonicParsing="false" text="exit the game " onAction="#handleCloseButtonAction" />
                             </items>
                         </Menu>
                     </menus>

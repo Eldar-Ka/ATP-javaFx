@@ -19,6 +19,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.net.URL;
@@ -28,6 +29,7 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 
 public class MyViewController implements IView, Observer, Initializable {
+    public Button closeButton;
     public TextField textField_mazeRows;
     public TextField textField_mazeColumns;
     public MazeDisplayer mazeDisplayer;
@@ -179,6 +181,14 @@ public class MyViewController implements IView, Observer, Initializable {
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
     }
+
+    public void handleCloseButtonAction(ActionEvent event) {
+        System.out.println("stop");
+        viewModel.close();
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
+
     /*
     public void setOnScroll(ScrollEvent scroll) {
         if (scroll.isControlDown()) {

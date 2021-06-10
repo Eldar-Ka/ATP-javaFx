@@ -37,6 +37,12 @@ public class MyModel extends Observable implements IModel{
         solverServer = new Server(5401, 1000, new ServerStrategySolveSearchProblem());
         startServers();
     }
+
+    @Override
+    public void close() {
+        stopServers();
+    }
+
     @Override
     public void genMaze(int rows, int cols) {
         generateMazeInServer(rows,cols);

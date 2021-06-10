@@ -12,5 +12,6 @@ public interface IModel {
     void updatePlayerLocation(MovementDirection direction);
     int getPlayerRow();
     int getPlayerCol();
+    void close();
     void assignObserver(Observer o);
 }

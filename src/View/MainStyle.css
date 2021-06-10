@@ -1,5 +1,5 @@
 .root{
-    -fx-background-image: url("https://i.pinimg.com/564x/42/2b/b2/422bb20ca8140882840656315ad2e1de.jpg");
+    -fx-background-image: url("//resources/Images/background.jpg");
     -fx-background-size: stretch;
     -fx-background-position: center center;
 }
