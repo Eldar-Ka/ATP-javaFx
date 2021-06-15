@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
@@ -81,7 +82,13 @@ public class MyViewController implements IView, Observer, Initializable {
 
     }
     public void mouseClicked(MouseEvent mouseEvent) {
+
         mazeDisplayer.requestFocus();
+        /*
+        viewModel.movebyMouss(mouseEvent);
+        mouseEvent.consume();
+        System.out.println("clicked");
+         */
     }
     private void setPlayerPos(int row, int col) {
         mazeDisplayer.setPlayerPos(row,col);
@@ -99,9 +106,10 @@ public class MyViewController implements IView, Observer, Initializable {
         }
     }
     public void keyPressed(KeyEvent keyEvent) {
-        viewModel.movePlayer(keyEvent);
+        viewModel.movePlayer(keyEvent.getCode());
         keyEvent.consume();
     }
+
 
     @Override
     public void update(Observable o, Object arg) {
@@ -129,6 +137,31 @@ public class MyViewController implements IView, Observer, Initializable {
 
     private void playerMoved() {
         setPlayerPos(viewModel.getPlayerRow(),viewModel.getPlayerCol());
+    }
+
+    public void mouseDragged(MouseEvent mouseEvent) {
+        if(viewModel.getMaze() != null) {
+            int maximumSize = Math.max(viewModel.getMaze()[0].length, viewModel.getMaze().length);
+            double mousePosX=helperMouseDragged(maximumSize,mazeDisplayer.getHeight(),
+                    viewModel.getMaze().length,mouseEvent.getX(),mazeDisplayer.getWidth() / maximumSize);
+            double mousePosY=helperMouseDragged(maximumSize,mazeDisplayer.getWidth(),
+                    viewModel.getMaze()[0].length,mouseEvent.getY(),mazeDisplayer.getHeight() / maximumSize);
+            if ( mousePosX == viewModel.getPlayerCol() && mousePosY < viewModel.getPlayerRow() )
+                viewModel.movePlayer(KeyCode.NUMPAD8);
+            else if (mousePosY == viewModel.getPlayerRow() && mousePosX > viewModel.getPlayerCol() )
+                viewModel.movePlayer(KeyCode.NUMPAD6);
+            else if ( mousePosY == viewModel.getPlayerRow() && mousePosX < viewModel.getPlayerCol() )
+                viewModel.movePlayer(KeyCode.NUMPAD4);
+            else if (mousePosX == viewModel.getPlayerCol() && mousePosY > viewModel.getPlayerRow()  )
+                viewModel.movePlayer(KeyCode.NUMPAD2);
+        }
+    }
+
+    private  double helperMouseDragged(int maxsize, double canvasSize, int mazeSize,double mouseEvent,double temp){
+        double cellSize=canvasSize/maxsize;
+        double start = (canvasSize / 2 - (cellSize * mazeSize / 2)) / cellSize;
+        double mouse = (int) ((mouseEvent) / (temp) - start);
+        return mouse;
     }
 
     private void mazeGen() throws Exception {
