@@ -8,8 +8,11 @@ import algorithms.search.Solution;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -23,6 +26,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Observable;
@@ -47,6 +51,7 @@ public class MyViewController implements IView, Observer, Initializable {
     public static MediaPlayer click;
     public static MediaPlayer vic;
     public static ImageView imgView;
+    private Parent myscene;
 
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
@@ -58,7 +63,7 @@ public class MyViewController implements IView, Observer, Initializable {
     public void setUpdatePlayerRow(int row) {
         this.updatePlayerRow.set(""+row);
     }
-
+    public void setScene(Parent scene){myscene = scene;}
     public String getUpdatePlayerCol() {
         return updatePlayerCol.get();
     }
@@ -84,11 +89,6 @@ public class MyViewController implements IView, Observer, Initializable {
     public void mouseClicked(MouseEvent mouseEvent) {
 
         mazeDisplayer.requestFocus();
-        /*
-        viewModel.movebyMouss(mouseEvent);
-        mouseEvent.consume();
-        System.out.println("clicked");
-         */
     }
     private void setPlayerPos(int row, int col) {
         mazeDisplayer.setPlayerPos(row,col);
@@ -223,6 +223,12 @@ public class MyViewController implements IView, Observer, Initializable {
         viewModel.close();
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
+    }
+
+    public void newGame() throws IOException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("MyView.fxml"));
+        Parent root = fxmlLoader.load();
+        ((Stage) closeButton.getScene().getWindow()).setScene(new Scene(root, 1000, 800));
     }
 
     /*

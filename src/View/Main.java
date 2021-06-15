@@ -35,15 +35,18 @@ public class Main extends Application {
         Parent root = fxmlLoader.load();
         Parent menu = mainMenufxmlLoader.load();
         primaryStage.setTitle("Maze game");
-        primaryStage.setScene(new Scene(root, 1000, 800));
+        primaryStage.setScene(new Scene(menu, 1000, 800));
         primaryStage.show();
-        //MainMenuController.playAudio();
+        MainMenuController.playAudio();
 
         IModel model = new MyModel();
         MyViewModel viewModel=new MyViewModel(model);
         MyViewController view=fxmlLoader.getController();
-        MainMenuController menuViwe=mainMenufxmlLoader.getController();
+        MainMenuController menuView=mainMenufxmlLoader.getController();
         view.setViewModel(viewModel);
+        menuView.setViewModel(viewModel);
+        menuView.setScene(new Scene(root, 1000, 800));
+        view.setScene(menu);
         MyViewController.playAudio();
         MyViewController.onSetImage();
 

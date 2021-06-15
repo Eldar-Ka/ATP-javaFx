@@ -1,5 +1,5 @@
 .root{
-    -fx-background-image: url("https://static.vecteezy.com/system/resources/previews/002/007/088/non_2x/brick-wall-background-design-illustration-free-vector.jpg");
+    -fx-background-image: url("//resources/Images/brick-wall.png");
     -fx-background-size: stretch;
     -fx-background-position: center center;
 }

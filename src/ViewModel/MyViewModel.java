@@ -6,6 +6,7 @@ import algorithms.search.Solution;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -85,6 +86,7 @@ public class MyViewModel extends Observable implements Observer {
         }
     }
     */
+
     public void close(){
         model.close();
     }
