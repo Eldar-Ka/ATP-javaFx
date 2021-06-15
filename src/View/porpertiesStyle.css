@@ -1,13 +1,7 @@
 .root{
-    -fx-background-image: url("//resources/Images/background.jpg");
     -fx-background-size: stretch;
     -fx-background-position: center center;
 }
-Pane{
-    -fx-border-color: orange;
-    -fx-border-width:0.01in ;
-}
-
 
 Button {
     -fx-text-fill: white;

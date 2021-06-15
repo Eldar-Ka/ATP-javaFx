@@ -16,6 +16,8 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import View.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#mouseClicked" prefHeight="585.0" prefWidth="924.0" stylesheets="@MainStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MyViewController">
     <Button fx:id="closeButton"/>
     <left>
@@ -67,21 +69,21 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
-                                <MenuItem fx:id="newMaze" mnemonicParsing="false" text="New" />
+                                <MenuItem fx:id="newGame" mnemonicParsing="false" text="New Game" />
                                 <MenuItem fx:id="SaveButton" mnemonicParsing="false" text="Save" />
                                 <MenuItem fx:id="LoadButton" mnemonicParsing="false" text="Load" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Options">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Properties" />
+                                <MenuItem mnemonicParsing="false" onAction="#openConfigurations" text="Properties" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Help">
                             <items>
                                 <MenuItem mnemonicParsing="false" text="Instructions" />
                             </items></Menu>
-                        <Menu mnemonicParsing="false" text="About">
+                        <Menu mnemonicParsing="false" onAction="#About" text="About">
                             <items>
                                 <MenuItem mnemonicParsing="false" text="Info" />
                             </items>
@@ -97,12 +99,12 @@
         </VBox>
     </top>
     <center>
-        <Pane fx:id="pane" BorderPane.alignment="CENTER" >
+        <Pane fx:id="paneMaze" prefHeight="5000" prefWidth="5000" BorderPane.alignment="CENTER" >
             <BorderPane.margin>
                 <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
             </BorderPane.margin>
             <children>
-                <MazeDisplayer disable="false" fx:id="mazeDisplayer" height="400.0" imageFileNameWin="./resources/Images/winner.jpg" imageFileNamePlayer="./resources/Images/red.jpg" imageFileNamePlayerL="./resources/Images/redL.jpg" imageFileNameWall="./resources/Images/wall.jpg" onKeyPressed="#keyPressed" width="400.0" BorderPane.alignment="CENTER" />
+                <MazeDisplayer  disable="false" fx:id="mazeDisplayer" height="707.7" imageFileNameWin="./resources/Images/winner.jpg" imageFileNamePlayer="./resources/Images/red.jpg" imageFileNamePlayerL="./resources/Images/redL.jpg" imageFileNameWall="./resources/Images/wall.jpg" imageFileNameBall="./resources/Images/pokeball.jpg" onKeyPressed="#keyPressed" width="772.3" BorderPane.alignment="CENTER" />
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -110,3 +112,4 @@
         </Pane>
     </center>
 </BorderPane>
+

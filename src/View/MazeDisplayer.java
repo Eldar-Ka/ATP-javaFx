@@ -5,6 +5,8 @@ import algorithms.mazeGenerators.Position;
 import algorithms.search.AState;
 import algorithms.search.MazeState;
 import algorithms.search.Solution;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.canvas.Canvas;
@@ -31,7 +33,15 @@ public class MazeDisplayer extends Canvas {
     private StringProperty imageFileNamePlayer = new SimpleStringProperty();
     private StringProperty imageFileNamePlayerL = new SimpleStringProperty();
     private StringProperty imageFileNameWin = new SimpleStringProperty();
+    private StringProperty imageFileNameBall = new SimpleStringProperty();
+    DoubleProperty myScale = new SimpleDoubleProperty(1.0);
 
+    public String getImageFileNameBall() {
+        return imageFileNameBall.get();
+    }
+    public void setImageFileNameBall(String imageFileNameRing) {
+        this.imageFileNameBall.set(imageFileNameRing);
+    }
 
     public String getImageFileNameWall() {
         return imageFileNameWall.get();
@@ -84,6 +94,18 @@ public class MazeDisplayer extends Canvas {
 
     public String getImgFileNameWall() {
         return imageFileNameWall.get();
+    }
+
+    public double getScale() {
+        return myScale.get();
+    }
+
+    public void setScale( double scale) {
+        myScale.set(scale);
+    }
+    public void setPivot( double x, double y) {
+        setTranslateX(getTranslateX()-x);
+        setTranslateY(getTranslateY()-y);
     }
     public void drawMaze(int[][] maze) throws Exception {
         this.matrix =maze;
@@ -162,8 +184,10 @@ public class MazeDisplayer extends Canvas {
         int[][] mat = m.getMaze();
         ArrayList<AState> path = sol.getSolutionPath();
         Image wallImg=null;
+        Image ringImg=null;
         try {
             wallImg=new Image(new FileInputStream(getImgFileNameWall()));
+            ringImg=new Image(new FileInputStream(getImageFileNameBall()));
         } catch (FileNotFoundException e) {
             System.out.println("file missing");
         }
@@ -182,7 +206,7 @@ public class MazeDisplayer extends Canvas {
                 }
                 for (AState aState : path) {
                     if (aState.toString().equals("{" + i + "," + j + "}"))
-                        graphicsContext.fillRect(x, y, cellW, cellH);
+                        graphicsContext.drawImage(ringImg,x,y,cellW,cellH);
                 }
             }
         }
@@ -198,7 +222,7 @@ public class MazeDisplayer extends Canvas {
         } catch (FileNotFoundException e) {
             System.out.println("file missing");
         }
-        graphicsContext.drawImage(winImg,getHeight()/4,getWidth()/4,(getHeight()/4)*3,(getWidth()/4)*3);
+        graphicsContext.drawImage(winImg,getHeight()/4,getWidth()/4,(getHeight()/4)*2.5,(getWidth()/4)*2.5);
     }
 
     private void drawMazePlayer(GraphicsContext graphicsContext, double cellH, double cellW, String direction) {

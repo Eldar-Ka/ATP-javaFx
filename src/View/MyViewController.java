@@ -5,11 +5,17 @@ import algorithms.mazeGenerators.AMazeGenerator;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.search.Solution;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,11 +23,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.transform.Scale;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Observable;
@@ -33,6 +44,7 @@ public class MyViewController implements IView, Observer, Initializable {
     public TextField textField_mazeRows;
     public TextField textField_mazeColumns;
     public MazeDisplayer mazeDisplayer;
+    public Pane paneMaze;
     public Button btn_generateMaze;
     public Button btn_solveMaze;
     public Button btn_mute;
@@ -46,6 +58,9 @@ public class MyViewController implements IView, Observer, Initializable {
     public static MediaPlayer click;
     public static MediaPlayer vic;
     public static ImageView imgView;
+    DoubleProperty myScale = new SimpleDoubleProperty(1.0);
+
+
 
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
@@ -89,12 +104,10 @@ public class MyViewController implements IView, Observer, Initializable {
         setUpdatePlayerCol(col);
         if (mazeDisplayer.getMatrix().length-1==row&&mazeDisplayer.getMatrix()[0].length-1==col)
         {
-            if(!mute) {
-                mediaPlayer.stop();
-                Media media = new Media(Paths.get("./resources/Mp3/Victory.mp3").toUri().toString());
-                vic = new MediaPlayer(media);
-                vic.play();
-            }
+            mediaPlayer.stop();
+            Media media = new Media(Paths.get("./resources/Mp3/Victory.mp3").toUri().toString());
+            vic = new MediaPlayer(media);
+            vic.play();
             btn_solveMaze.setDisable(true);
         }
     }
@@ -119,11 +132,9 @@ public class MyViewController implements IView, Observer, Initializable {
         }
     }
     private void mazeSolved() {
-        if(!mute) {
-            Media media = new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
-            click = new MediaPlayer(media);
-            click.play();
-        }
+        Media media = new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
+        click = new MediaPlayer(media);
+        click.play();
         mazeDisplayer.setSol(viewModel.getSol());
     }
 
@@ -139,6 +150,8 @@ public class MyViewController implements IView, Observer, Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lbl_playerRow.textProperty().bind(updatePlayerRow);
         lbl_playerCol.textProperty().bind(updatePlayerCol);
+        paneMaze.scaleXProperty().bind(myScale);
+        paneMaze.scaleYProperty().bind(myScale);
     }
 
     public void solveMaze(ActionEvent actionEvent) {
@@ -191,23 +204,89 @@ public class MyViewController implements IView, Observer, Initializable {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
-
-    /*
-    public void setOnScroll(ScrollEvent scroll) {
-        if (scroll.isControlDown()) {
-            double zoom_fac = 1.05;
-            if (scroll.getDeltaY() < 0) {
-                zoom_fac = 2.0 - zoom_fac;
-            }
-            Scale newScale = new Scale();
-            newScale.setPivotX(scroll.getX());
-            newScale.setPivotY(scroll.getY());
-            newScale.setX(mazeDisplayer.getScaleX() * zoom_fac);
-            newScale.setY(mazeDisplayer.getScaleY() * zoom_fac);
-            mazeDisplayer.getTransforms().add(newScale);
-            scroll.consume();
-        }
+    public EventHandler<ScrollEvent> getOnScrollEventHandler() {
+        return onScrollEventHandler;
     }
 
-     */
+    EventHandler<ScrollEvent> onScrollEventHandler = new EventHandler<ScrollEvent>() {
+        @Override
+        public void handle(ScrollEvent event) {
+            if (event.isControlDown()) {
+                boolean zOut = false;
+                double scale = mazeDisplayer.getScale();
+                double oldScale = scale;
+
+                if (event.getDeltaY() < 0) {
+                    scale /= Math.pow(1.2, -event.getDeltaY() / 20);
+                    //scale /= 1.3;
+                    zOut = true;
+                }
+                else
+                    scale *= Math.pow(1.2, event.getDeltaY() / 20);
+                    //scale *= 1.3;
+
+                scale = clamp(scale, 1.0d, 50.0d);
+
+                double f = (scale / oldScale) - 1;
+
+                double dx = (event.getSceneX() - (paneMaze.getBoundsInParent().getWidth() / 2 + paneMaze.getBoundsInParent().getMinX()));
+                double dy = (event.getSceneY() - (paneMaze.getBoundsInParent().getHeight() / 2 + paneMaze.getBoundsInParent().getMinY()));
+                myScale.set(scale);
+                if (!zOut){
+                    setPivot(f*dx,f*dy );
+                }
+                else{
+                    paneMaze.setTranslateX(paneMaze.getTranslateX()/50);
+                    paneMaze.setTranslateY(paneMaze.getTranslateY()/50);
+                }
+
+
+                event.consume();
+            }
+
+        }
+
+    };
+    public void setPivot( double x, double y) {
+        paneMaze.setTranslateX(paneMaze.getTranslateX()-x);
+        paneMaze.setTranslateY(paneMaze.getTranslateY()-y);
+    }
+
+    public static double clamp( double value, double min, double max) {
+
+        if( Double.compare(value, min) < 0)
+            return min;
+
+        if( Double.compare(value, max) > 0)
+            return max;
+
+        return value;
+    }
+
+    public void openConfigurations(ActionEvent actionEvent) throws IOException {
+        Stage stage = new Stage();
+        stage.setTitle("Properties");
+        FXMLLoader propFXML = new FXMLLoader(getClass().getResource("/View/Properties.fxml"));
+        Parent root = propFXML.load();
+        PropertiesController propController = propFXML.getController();
+        propController.setStage(stage);
+        Scene scene = new Scene(root, 500, 250);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    public void About(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            stage.setTitle("About");
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Parent root = fxmlLoader.load(getClass().getResource("About.fxml").openStream());
+            Scene scene = new Scene(root, 748, 400);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
+            stage.show();
+        } catch (Exception e) {
+        }
+    }
 }
