@@ -84,6 +84,23 @@ public class MyViewController extends MenuController implements IView, Observer,
 
 
     }
+
+    public void loadMaze() {
+
+        if(!mute){
+            Media media = new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
+            click = new MediaPlayer(media);
+            click.play();
+        }
+        btn_generateMaze.setDisable(true);
+        btn_solveMaze.setDisable(false);
+        viewModel.loadMaze();
+        int[][] m = viewModel.getMaze();
+        textField_mazeRows.setText(String.valueOf(m.length));
+        textField_mazeColumns.setText(String.valueOf(m.length));
+
+
+    }
     public void mouseClicked(MouseEvent mouseEvent) {
         mazeDisplayer.requestFocus();
     }

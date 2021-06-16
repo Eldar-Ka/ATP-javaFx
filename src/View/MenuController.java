@@ -22,11 +22,8 @@ public class MenuController {
     public static MyViewModel viewModel;
     public static MediaPlayer mediaPlayer;
     public static boolean mute;
-    public static MyViewController view;
+    private MyViewController view;
 
-    public static void setViewController(MyViewController viewC) {
-        view = viewC;
-    }
 
     public MyViewModel getViewModel() {
         return viewModel;
@@ -99,7 +96,7 @@ public class MenuController {
             viewModel=new MyViewModel(new MyModel());
 
         //MyViewModel viewModel=new MyViewModel(model);
-        MyViewController view=fxmlLoader.getController();
+        view=fxmlLoader.getController();
         //MenuController menuView=mainMenufxmlLoader.getController();
         view.setViewModel(viewModel);
         //menuView.setViewModel(viewModel);
@@ -108,6 +105,8 @@ public class MenuController {
     }
 
     public void loadGame() throws Exception {
+        newGame();
+        view.loadMaze();
         //mazeDisplayer.loadMaze();
         //textField_mazeRows.setText(mazeDisplayer.getMatrix().length);
         //textField_mazeColumns.setText("2");

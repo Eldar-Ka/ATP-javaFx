@@ -53,6 +53,28 @@ public class MyModel extends Observable implements IModel{
         notifymovmet();
     }
 
+    public void loadMaze() {
+        String mazeFileName = "savedMaze.maze";
+
+        byte savedMazeBytes[] = new byte[0];
+        try {
+            InputStream in = new MyDecompressorInputStream(new
+                    FileInputStream(mazeFileName));
+            savedMazeBytes = new byte[50000];
+            in.read(savedMazeBytes);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        maze = new Maze(savedMazeBytes);
+        matrix=maze.getMaze();
+        setChanged();
+        notifyObservers("maze gen");
+        playerRow=0;
+        playerCol=0;
+        notifymovmet();
+    }
+
     @Override
     public int[][] getMaze() {
         return matrix;
@@ -77,7 +99,6 @@ public class MyModel extends Observable implements IModel{
                         ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
                         ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
                         toServer.flush();
-                        MyMazeGenerator mg = new MyMazeGenerator();
                         toServer.writeObject(maze); //send maze to server
                         toServer.flush();
                         sol = (Solution) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server

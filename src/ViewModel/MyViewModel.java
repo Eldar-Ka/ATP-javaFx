@@ -37,6 +37,9 @@ public class MyViewModel extends Observable implements Observer {
     public void genMaze(int rows, int cols){
         model.genMaze(rows, cols);
     }
+    public void loadMaze(){
+        model.loadMaze();
+    }
     public void solveMaze(){
         model.solveMaze();
     }
@@ -58,34 +61,6 @@ public class MyViewModel extends Observable implements Observer {
         model.updatePlayerLocation(direction);
     }
 
-    /*
-    public void movebyMouss(MouseEvent mouseEvent) {
-        try {
-            model.getMaze();
-            MovementDirection direction = null;
-            int mouseX = (int) ((mouseEvent.getX())); //  / (mazeDisplayer.getWidth() / getMaze()[0].length)
-            int mouseY = (int) ((mouseEvent.getY())); // / (mazeDisplayer.getHeight() / getMaze().length)
-            
-            if (mouseY < getPlayerRow()) {
-                direction=MovementDirection.UP;
-            }
-            if (mouseY > getPlayerRow()) {
-                direction=MovementDirection.DOWN;
-            }
-            if (mouseX < getPlayerCol()) {
-                direction=MovementDirection.LEFT;
-            }
-            if (mouseX > getPlayerCol()) {
-                direction=MovementDirection.RIGHT;
-            }
-            model.updatePlayerLocation(direction);
-
-
-        } catch (NullPointerException e) {
-            mouseEvent.consume();
-        }
-    }
-    */
 
     public void close(){
         model.close();

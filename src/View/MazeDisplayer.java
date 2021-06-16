@@ -116,7 +116,7 @@ public class MazeDisplayer extends Canvas {
         m.setMaze(maze);
         m.setColumns(maze[0].length);
         m.setRows(maze.length);
-        Position p = new Position(maze.length, maze[0].length);
+        Position p = new Position(maze.length-1, maze[0].length-1);
         m.setGoalPosition(p);
         draw();
     }
@@ -260,24 +260,4 @@ public class MazeDisplayer extends Canvas {
             e.printStackTrace();
         }
     }
-
-    public void loadMaze() throws Exception {
-
-        String mazeFileName = "savedMaze.maze"; // delete
-
-        byte savedMazeBytes[] = new byte[0];
-        try {
-            InputStream in = new MyDecompressorInputStream(new
-                    FileInputStream(mazeFileName));
-            savedMazeBytes = new byte[50000];
-            in.read(savedMazeBytes);
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        m = new Maze(savedMazeBytes);
-        //drawMaze(m.getMaze());
-        draw();
-    }
-
 }
