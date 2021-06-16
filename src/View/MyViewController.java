@@ -1,22 +1,15 @@
 package View;
 
 import ViewModel.MyViewModel;
-import algorithms.mazeGenerators.AMazeGenerator;
-import algorithms.mazeGenerators.Maze;
-import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.search.Solution;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -30,19 +23,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.transform.Scale;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class MyViewController implements IView, Observer, Initializable {
-    public Button closeButton;
+public class MyViewController extends MenuController implements IView, Observer, Initializable  {
+
     public TextField textField_mazeRows;
     public TextField textField_mazeColumns;
     public MazeDisplayer mazeDisplayer;
@@ -50,24 +40,21 @@ public class MyViewController implements IView, Observer, Initializable {
     public Button btn_generateMaze;
     public Button btn_solveMaze;
     public Button btn_mute;
-    private MyViewModel viewModel;
     public Label lbl_playerRow;
     public Label lbl_playerCol;
     StringProperty updatePlayerRow=new SimpleStringProperty();
     StringProperty updatePlayerCol=new SimpleStringProperty();
-    public static boolean mute=false;
-    public static MediaPlayer mediaPlayer;
     public static MediaPlayer click;
     public static MediaPlayer vic;
     public static ImageView imgView;
     DoubleProperty myScale = new SimpleDoubleProperty(1.0);
 
 
-
     public void setViewModel(MyViewModel viewModel) {
-        this.viewModel = viewModel;
+        super.setViewModel(viewModel);
         this.viewModel.addObserver(this);
     }
+
     public String getUpdatePlayerRow() {
         return updatePlayerRow.get();
     }
@@ -218,38 +205,15 @@ public class MyViewController implements IView, Observer, Initializable {
             btn_mute.textProperty().setValue("Mute");
         }
     }
-    public static void playAudio() {
-        Media media=new Media(Paths.get("./resources/Mp3/StrangerThingsTitleSequence.mp3").toUri().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.play();
-    }
 
-    public void handleCloseButtonAction(ActionEvent event) {
-        System.out.println("stop");
-        viewModel.close();
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
-    }
-    public EventHandler<ScrollEvent> getOnScrollEventHandler() {
-        return onScrollEventHandler;
-    }
-
-    public void newGame() throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("MyView.fxml"));
-        Parent root = fxmlLoader.load();
-        ((Stage) closeButton.getScene().getWindow()).setScene(new Scene(root, 1000, 800));
-    }
 
     public void saveGame() {
         mazeDisplayer.saveMaze();
     }
 
-    public void loadGame() throws Exception {
-        mazeDisplayer.loadMaze();
-        //textField_mazeRows.setText(mazeDisplayer.getMatrix().length);
-        //textField_mazeColumns.setText("2");
-        //mazeGen();
+
+    public EventHandler<ScrollEvent> getOnScrollEventHandler() {
+        return onScrollEventHandler;
     }
 
     public void setOnScroll(ScrollEvent scroll) {
@@ -322,30 +286,4 @@ public class MyViewController implements IView, Observer, Initializable {
         return value;
     }
 
-    public void openConfigurations(ActionEvent actionEvent) throws IOException {
-        Stage stage = new Stage();
-        stage.setTitle("Properties");
-        FXMLLoader propFXML = new FXMLLoader(getClass().getResource("/View/Properties.fxml"));
-        Parent root = propFXML.load();
-        PropertiesController propController = propFXML.getController();
-        propController.setStage(stage);
-        Scene scene = new Scene(root, 500, 250);
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
-    }
-
-    public void About(ActionEvent actionEvent) {
-        try {
-            Stage stage = new Stage();
-            stage.setTitle("About");
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            Parent root = fxmlLoader.load(getClass().getResource("About.fxml").openStream());
-            Scene scene = new Scene(root, 748, 400);
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
-            stage.show();
-        } catch (Exception e) {
-        }
-    }
 }

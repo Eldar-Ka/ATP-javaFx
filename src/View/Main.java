@@ -4,28 +4,11 @@ import Model.IModel;
 import Model.MyModel;
 import ViewModel.MyViewModel;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.util.Duration;
-
-import javax.sound.sampled.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Paths;
 
 public class Main extends Application {
 
@@ -39,26 +22,33 @@ public class Main extends Application {
         primaryStage.setTitle("Maze game");
         primaryStage.setScene(new Scene(menu, 1000, 800));
         primaryStage.show();
-        MainMenuController.playAudio();
-
+        MenuController.playAudio("./resources/Mp3/IveanPolkkaBass.mp3");
+        MenuController menuView=mainMenufxmlLoader.getController();
+        /* delete
         IModel model = new MyModel();
         MyViewModel viewModel=new MyViewModel(model);
         MyViewController view=fxmlLoader.getController();
-        MainMenuController menuView=mainMenufxmlLoader.getController();
+        MenuController menuView=mainMenufxmlLoader.getController();
         view.setViewModel(viewModel);
         menuView.setViewModel(viewModel);
-        menuView.setScene(new Scene(root, 1000, 800));
-        MyViewController.playAudio();
-        MyViewController.onSetImage();
-        primaryStage.addEventFilter( ScrollEvent.ANY, view.getOnScrollEventHandler());
+        */
+        //MenuController.setViewController(view);
 
+
+        //view.setViewModel(viewModel);
+        //menuView.setScene(new Scene(root, 1000, 800));
+
+        //why need ?
+        //MyViewController.onSetImage();
+        //primaryStage.addEventFilter( ScrollEvent.ANY, view.getOnScrollEventHandler());
 
 
         primaryStage.setOnCloseRequest(we -> {
             System.out.println("Stage is closing");
-            viewModel.close();
+            MyViewModel model= menuView.getViewModel();
+            if(model != null)
+                model.close();
         });
-
 
 
     }

@@ -30,7 +30,7 @@ public class MyModel extends Observable implements IModel{
     private Server generatorServer;
     private Server solverServer;
     private boolean serversOn = false;
-    public static MediaPlayer mediaPlayer;
+
     public MyModel(){
         generatorServer = new Server(5400, 1000, new ServerStrategyGenerateMaze());
         solverServer = new Server(5401, 1000, new ServerStrategySolveSearchProblem());
