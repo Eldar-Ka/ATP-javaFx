@@ -74,7 +74,7 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Options">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Properties" />
+                                <MenuItem mnemonicParsing="false" text="Properties" onAction="#openConfigurations"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Help">
@@ -83,7 +83,7 @@
                             </items></Menu>
                         <Menu mnemonicParsing="false" text="About">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Info" />
+                                <MenuItem mnemonicParsing="false" text="Info" onAction="#About"/>
                             </items>
                         </Menu>
                         <Menu id="exitMenu" mnemonicParsing="false" text="Exit">

@@ -25,14 +25,17 @@ public class MainMenuController {
     }
 
     public void playGame() {
+        //mediaPlayer.stop();
         ((Stage) closeButton.getScene().getWindow()).setScene(gamescene);
     }
 
     public static void playAudio() {
+        /* duplicate music maze and menu
         Media media=new Media(Paths.get("./resources/Mp3/IveanPolkkaBass.mp3").toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
+         */
     }
 
     public void handleCloseButtonAction(ActionEvent event) {
