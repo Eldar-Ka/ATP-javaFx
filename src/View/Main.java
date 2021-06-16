@@ -14,7 +14,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("MyView.fxml"));
         FXMLLoader mainMenufxmlLoader=new FXMLLoader(getClass().getResource("MainMenuView.fxml"));
         Parent root = fxmlLoader.load();
@@ -24,30 +23,16 @@ public class Main extends Application {
         primaryStage.show();
         MenuController.playAudio("./resources/Mp3/IveanPolkkaBass.mp3");
         MenuController menuView=mainMenufxmlLoader.getController();
-        /* delete
-        IModel model = new MyModel();
-        MyViewModel viewModel=new MyViewModel(model);
-        MyViewController view=fxmlLoader.getController();
-        MenuController menuView=mainMenufxmlLoader.getController();
-        view.setViewModel(viewModel);
-        menuView.setViewModel(viewModel);
-        */
-        //MenuController.setViewController(view);
-
 
         //view.setViewModel(viewModel);
         //menuView.setScene(new Scene(root, 1000, 800));
 
-        //why need ?
-        //MyViewController.onSetImage();
-        //primaryStage.addEventFilter( ScrollEvent.ANY, view.getOnScrollEventHandler());
-
 
         primaryStage.setOnCloseRequest(we -> {
             System.out.println("Stage is closing");
-            MyViewModel model= menuView.getViewModel();
-            if(model != null)
-                model.close();
+            MyViewModel Vmodel= menuView.getViewModel();
+            if(Vmodel != null)
+                Vmodel.close();
         });
 
 

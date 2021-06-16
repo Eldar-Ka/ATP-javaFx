@@ -61,13 +61,13 @@ public class MenuController {
     }
 
     public static void playAudio(String path) {
-        /*
+
         Media media=new Media(Paths.get(path).toUri().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
         mute=false;
-         */
+
     }
 
     public void handleCloseButtonAction() {
@@ -79,7 +79,8 @@ public class MenuController {
     }
 
     public void newGame() throws IOException {
-        //mediaPlayer.stop();
+        //Stage s;
+        mediaPlayer.stop();
         /*
         if(viewModel != null) // if in the menu
             viewModel.close();
@@ -100,6 +101,11 @@ public class MenuController {
         //MenuController menuView=mainMenufxmlLoader.getController();
         view.setViewModel(viewModel);
         //menuView.setViewModel(viewModel);
+//        MyViewController.onSetImage();
+//        ((Stage)closeButton.getScene().getWindow()).addEventFilter( ScrollEvent.ANY, view.getOnScrollEventHandler());
+
+
+
 
         MyViewController.playAudio("./resources/Mp3/StrangerThingsTitleSequence.mp3");
     }
