@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -30,6 +31,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("MyView.fxml"));
         FXMLLoader mainMenufxmlLoader=new FXMLLoader(getClass().getResource("MainMenuView.fxml"));
         Parent root = fxmlLoader.load();
@@ -48,6 +50,8 @@ public class Main extends Application {
         menuView.setScene(new Scene(root, 1000, 800));
         MyViewController.playAudio();
         MyViewController.onSetImage();
+        primaryStage.addEventFilter( ScrollEvent.ANY, view.getOnScrollEventHandler());
+
 
 
         primaryStage.setOnCloseRequest(we -> {
