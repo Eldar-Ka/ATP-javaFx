@@ -48,6 +48,7 @@ public class MyViewController extends MenuController implements IView, Observer,
     public static MediaPlayer vic;
     public static ImageView imgView;
     DoubleProperty myScale = new SimpleDoubleProperty(1.0);
+    double focus=1;
 
 
     public void setViewModel(MyViewModel viewModel) {
@@ -211,11 +212,28 @@ public class MyViewController extends MenuController implements IView, Observer,
         mazeDisplayer.saveMaze();
     }
 
-
-    public EventHandler<ScrollEvent> getOnScrollEventHandler() {
-        return onScrollEventHandler;
-    }
-
+    public void setOnScroll(ScrollEvent scroll) {
+        if (scroll.isControlDown()) {
+            focus*=1.5;
+            double scale = mazeDisplayer.getScale();
+            if (scroll.getDeltaY() > 0) {
+                mazeDisplayer.setScaleX(focus);
+                mazeDisplayer.setScaleY(focus);
+            }
+            else if (scroll.getDeltaY() < 0) {
+                focus*=0.5;
+                mazeDisplayer.setScaleX(focus);
+                mazeDisplayer.setScaleY(focus);
+            }
+            if (mazeDisplayer.getScaleX()*focus<0.9)
+            {
+                mazeDisplayer.setScaleX(1);
+                mazeDisplayer.setScaleY(1);
+            }
+            scroll.consume();
+        }
+    }//******to mix^V*******
+    /*
     public void setOnScroll(ScrollEvent scroll) {
         if (scroll.isControlDown()) {
             double zoom_fac = 1.05;
@@ -231,45 +249,8 @@ public class MyViewController extends MenuController implements IView, Observer,
             scroll.consume();
         }
     }
-    EventHandler<ScrollEvent> onScrollEventHandler = new EventHandler<ScrollEvent>() {
-        @Override
-        public void handle(ScrollEvent event) {
-            if (event.isControlDown()) {
-                boolean zOut = false;
-                double scale = mazeDisplayer.getScale();
-                double oldScale = scale;
+     */
 
-                if (event.getDeltaY() < 0) {
-                    scale /= Math.pow(1.2, -event.getDeltaY() / 20);
-                    //scale /= 1.3;
-                    zOut = true;
-                }
-                else
-                    scale *= Math.pow(1.2, event.getDeltaY() / 20);
-                    //scale *= 1.3;
-
-                scale = clamp(scale, 1.0d, 50.0d);
-
-                double f = (scale / oldScale) - 1;
-
-                double dx = (event.getSceneX() - (paneMaze.getBoundsInParent().getWidth() / 2 + paneMaze.getBoundsInParent().getMinX()));
-                double dy = (event.getSceneY() - (paneMaze.getBoundsInParent().getHeight() / 2 + paneMaze.getBoundsInParent().getMinY()));
-                myScale.set(scale);
-                if (!zOut){
-                    setPivot(f*dx,f*dy );
-                }
-                else{
-                    paneMaze.setTranslateX(paneMaze.getTranslateX()/50);
-                    paneMaze.setTranslateY(paneMaze.getTranslateY()/50);
-                }
-
-
-                event.consume();
-            }
-
-        }
-
-    };
     public void setPivot( double x, double y) {
         paneMaze.setTranslateX(paneMaze.getTranslateX()-x);
         paneMaze.setTranslateY(paneMaze.getTranslateY()-y);
