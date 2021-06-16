@@ -37,8 +37,8 @@ public class MyViewModel extends Observable implements Observer {
     public void genMaze(int rows, int cols){
         model.genMaze(rows, cols);
     }
-    public void loadMaze(){
-        model.loadMaze();
+    public void loadMaze(String name){
+        model.loadMaze(name);
     }
     public void solveMaze(){
         model.solveMaze();

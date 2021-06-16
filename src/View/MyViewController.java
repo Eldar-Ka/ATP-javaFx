@@ -8,8 +8,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -23,8 +27,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.transform.Scale;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Observable;
@@ -86,7 +93,7 @@ public class MyViewController extends MenuController implements IView, Observer,
 
     }
 
-    public void loadMaze() {
+    public void loadMaze(String name) {
 
         if(!mute){
             Media media = new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
@@ -95,7 +102,7 @@ public class MyViewController extends MenuController implements IView, Observer,
         }
         btn_generateMaze.setDisable(true);
         btn_solveMaze.setDisable(false);
-        viewModel.loadMaze();
+        viewModel.loadMaze(name);
         int[][] m = viewModel.getMaze();
         textField_mazeRows.setText(String.valueOf(m.length));
         textField_mazeColumns.setText(String.valueOf(m.length));
@@ -225,8 +232,18 @@ public class MyViewController extends MenuController implements IView, Observer,
     }
 
 
-    public void saveGame() {
-        mazeDisplayer.saveMaze();
+    public void saveGame() throws IOException {
+        Stage stage = new Stage();
+        stage.setTitle("SaveAs");
+        FXMLLoader saveFXML = new FXMLLoader(getClass().getResource("/View/SaveView.fxml"));
+        Parent root = saveFXML.load();
+        SaveController saveController = saveFXML.getController();
+        saveController.setStage(stage);
+        saveController.setMazeDisplayer(mazeDisplayer);
+        Scene scene = new Scene(root, 700, 450);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
     }
 
     public void setOnScroll(ScrollEvent scroll) {
@@ -244,44 +261,11 @@ public class MyViewController extends MenuController implements IView, Observer,
             }
             if (mazeDisplayer.getScaleX()*focus<0.9)
             {
+                focus = 0.8;
                 mazeDisplayer.setScaleX(1);
                 mazeDisplayer.setScaleY(1);
             }
             scroll.consume();
         }
-    }//******to mix^V*******
-    /*
-    public void setOnScroll(ScrollEvent scroll) {
-        if (scroll.isControlDown()) {
-            double zoom_fac = 1.05;
-            if (scroll.getDeltaY() < 0) {
-                zoom_fac = 2.0 - zoom_fac;
-            }
-            Scale newScale = new Scale();
-            newScale.setPivotX(scroll.getX());
-            newScale.setPivotY(scroll.getY());
-            newScale.setX(mazeDisplayer.getScaleX() * zoom_fac);
-            newScale.setY(mazeDisplayer.getScaleY() * zoom_fac);
-            mazeDisplayer.getTransforms().add(newScale);
-            scroll.consume();
-        }
     }
-     */
-
-    public void setPivot( double x, double y) {
-        paneMaze.setTranslateX(paneMaze.getTranslateX()-x);
-        paneMaze.setTranslateY(paneMaze.getTranslateY()-y);
-    }
-
-    public static double clamp( double value, double min, double max) {
-
-        if( Double.compare(value, min) < 0)
-            return min;
-
-        if( Double.compare(value, max) > 0)
-            return max;
-
-        return value;
-    }
-
 }

@@ -24,6 +24,9 @@ public class MenuController {
     public static boolean mute;
     private MyViewController view;
 
+    public MyViewController getView() {
+        return view;
+    }
 
     public MyViewModel getViewModel() {
         return viewModel;
@@ -79,44 +82,34 @@ public class MenuController {
     }
 
     public void newGame() throws IOException {
-        //Stage s;
         mediaPlayer.stop();
-        /*
-        if(viewModel != null) // if in the menu
-            viewModel.close();
-        else
-            viewModel=new MyViewModel(model);
-        */
+
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("MyView.fxml"));
         Parent root = fxmlLoader.load();
         ((Stage) closeButton.getScene().getWindow()).setScene(new Scene(root, 1000, 800));
 
-        //IModel model = new MyModel();
 
         if(viewModel == null) // if in the menu
             viewModel=new MyViewModel(new MyModel());
 
-        //MyViewModel viewModel=new MyViewModel(model);
         view=fxmlLoader.getController();
-        //MenuController menuView=mainMenufxmlLoader.getController();
         view.setViewModel(viewModel);
-        //menuView.setViewModel(viewModel);
-//        MyViewController.onSetImage();
-//        ((Stage)closeButton.getScene().getWindow()).addEventFilter( ScrollEvent.ANY, view.getOnScrollEventHandler());
-
-
-
-
         MyViewController.playAudio("./resources/Mp3/StrangerThingsTitleSequence.mp3");
     }
 
     public void loadGame() throws Exception {
-        newGame();
-        view.loadMaze();
-        //mazeDisplayer.loadMaze();
-        //textField_mazeRows.setText(mazeDisplayer.getMatrix().length);
-        //textField_mazeColumns.setText("2");
-        //mazeGen();
+        Stage stage = new Stage();
+        stage.setTitle("Load");
+        FXMLLoader loadFXML = new FXMLLoader(getClass().getResource("/View/LoadView.fxml"));
+        Parent root = loadFXML.load();
+        LoadController loadController = loadFXML.getController();
+        loadController.setStage(stage);
+        loadController.setView(view);
+        Scene scene = new Scene(root, 700, 450);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+        loadController.setMenuController(this);
     }
 
 }

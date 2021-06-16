@@ -13,6 +13,6 @@ public interface IModel {
     int getPlayerRow();
     int getPlayerCol();
     void close();
-    void loadMaze();
+    void loadMaze(String name);
     void assignObserver(Observer o);
 }

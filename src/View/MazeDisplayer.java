@@ -248,8 +248,7 @@ public class MazeDisplayer extends Canvas {
             graphicsContext.drawImage(playerImg,x,y,cellW,cellH);
     }
 
-    public void saveMaze(){
-        String mazeFileName = "savedMaze.maze";
+    public void saveMaze(String mazeFileName){
         try {
             OutputStream out = new MyCompressorOutputStream(new FileOutputStream(mazeFileName));
             out.write(m.toByteArray());
