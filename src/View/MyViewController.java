@@ -51,7 +51,7 @@ public class MyViewController implements IView, Observer, Initializable {
     public static MediaPlayer click;
     public static MediaPlayer vic;
     public static ImageView imgView;
-    private Parent myscene;
+
 
     public void setViewModel(MyViewModel viewModel) {
         this.viewModel = viewModel;
@@ -63,7 +63,6 @@ public class MyViewController implements IView, Observer, Initializable {
     public void setUpdatePlayerRow(int row) {
         this.updatePlayerRow.set(""+row);
     }
-    public void setScene(Parent scene){myscene = scene;}
     public String getUpdatePlayerCol() {
         return updatePlayerCol.get();
     }
@@ -72,7 +71,7 @@ public class MyViewController implements IView, Observer, Initializable {
         this.updatePlayerCol.set(""+col);
     }
 
-    public void generateMaze(ActionEvent actionEvent) {
+    public void generateMaze() {
         if(!mute) {
             Media media = new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
             click = new MediaPlayer(media);
@@ -230,6 +229,18 @@ public class MyViewController implements IView, Observer, Initializable {
         Parent root = fxmlLoader.load();
         ((Stage) closeButton.getScene().getWindow()).setScene(new Scene(root, 1000, 800));
     }
+
+    public void saveGame() {
+        mazeDisplayer.saveMaze();
+    }
+
+    public void loadGame() throws Exception {
+        mazeDisplayer.loadMaze();
+        //textField_mazeRows.setText(mazeDisplayer.getMatrix().length);
+        //textField_mazeColumns.setText("2");
+        //mazeGen();
+    }
+
 
     /*
     public void setOnScroll(ScrollEvent scroll) {

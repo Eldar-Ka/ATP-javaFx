@@ -1,6 +1,10 @@
 package View;
 
+import IO.MyCompressorOutputStream;
+import IO.MyDecompressorInputStream;
+import algorithms.mazeGenerators.AMazeGenerator;
 import algorithms.mazeGenerators.Maze;
+import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.AState;
 import algorithms.search.MazeState;
@@ -14,10 +18,9 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MazeDisplayer extends Canvas {
     private int playerRow=0;
@@ -87,8 +90,12 @@ public class MazeDisplayer extends Canvas {
     }
     public void drawMaze(int[][] maze) throws Exception {
         this.matrix =maze;
-        m=new Maze(2,2);
+        m = new Maze(2,2);
         m.setMaze(maze);
+        m.setColumns(maze[0].length);
+        m.setRows(maze.length);
+        Position p = new Position(maze.length, maze[0].length);
+        m.setGoalPosition(p);
         draw();
     }
     public void setSol(Solution sol) {
@@ -215,6 +222,38 @@ public class MazeDisplayer extends Canvas {
             graphicsContext.fillRect(x,y, cellW,cellH);
         else
             graphicsContext.drawImage(playerImg,x,y,cellW,cellH);
+    }
+
+    public void saveMaze(){
+        String mazeFileName = "savedMaze.maze";
+        try {
+            OutputStream out = new MyCompressorOutputStream(new FileOutputStream(mazeFileName));
+            out.write(m.toByteArray());
+            System.out.println(m);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadMaze() throws Exception {
+
+        String mazeFileName = "savedMaze.maze"; // delete
+
+        byte savedMazeBytes[] = new byte[0];
+        try {
+            InputStream in = new MyDecompressorInputStream(new
+                    FileInputStream(mazeFileName));
+            savedMazeBytes = new byte[50000];
+            in.read(savedMazeBytes);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        m = new Maze(savedMazeBytes);
+        //drawMaze(m.getMaze());
+        draw();
     }
 
 }

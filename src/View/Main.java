@@ -46,7 +46,6 @@ public class Main extends Application {
         view.setViewModel(viewModel);
         menuView.setViewModel(viewModel);
         menuView.setScene(new Scene(root, 1000, 800));
-        view.setScene(menu);
         MyViewController.playAudio();
         MyViewController.onSetImage();
 

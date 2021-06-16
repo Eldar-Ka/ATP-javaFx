@@ -68,8 +68,8 @@
                         <Menu mnemonicParsing="false" text="File">
                             <items>
                                 <MenuItem fx:id="newMaze" mnemonicParsing="false" text="New" onAction="#newGame"/>
-                                <MenuItem fx:id="SaveButton" mnemonicParsing="false" text="Save" />
-                                <MenuItem fx:id="LoadButton" mnemonicParsing="false" text="Load" />
+                                <MenuItem fx:id="SaveButton" mnemonicParsing="false" text="Save" onAction="#saveGame"/>
+                                <MenuItem fx:id="LoadButton" mnemonicParsing="false" text="Load" onAction="#loadGame"/>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Options">
