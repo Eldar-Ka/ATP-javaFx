@@ -5,34 +5,33 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="305.0" prefWidth="578.0" style="-fx-background-image: url(Images/background.jpg); -fx-background-size: 100% 100%;" stylesheets="@porpertiesStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.PropertiesController">
-    <children>
-      <BorderPane prefHeight="305.0" prefWidth="578.0">
-         <center>
-            <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="387.0" BorderPane.alignment="CENTER">
-               <children>
-                    <Label fx:id="label" />
-                    <Label layoutX="82.0" layoutY="110.0" prefHeight="17.0" prefWidth="107.0" text="Generator Type" textFill="WHITE" />
-                    <Label layoutX="77.0" layoutY="66.0" prefHeight="17.0" prefWidth="117.0" text="Searching Algorithm" textFill="#fcfafa" />
-                    <ChoiceBox fx:id="generator" layoutX="207.0" layoutY="106.0" prefWidth="150.0" />
-                    <ChoiceBox fx:id="searchingAlgorithm" layoutX="207.0" layoutY="62.0" prefWidth="150.0" />
-                    <Button fx:id="btnUpdate" layoutX="255.0" layoutY="165.0" mnemonicParsing="false" onAction="#UpdateClicked" text="Update">
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding></Button>
-               </children>
-               <BorderPane.margin>
-                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-               </BorderPane.margin>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Pane>
-         </center>
-      </BorderPane>
-
-
-    </children>
-</Pane>
+<BorderPane prefHeight="178.0" prefWidth="334.0" style="-fx-background-image: url(Images/background.jpg); -fx-background-size: 100% 100%;" stylesheets="@porpertiesStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.PropertiesController">
+    <top>
+        <Label fx:id="label" BorderPane.alignment="CENTER" />
+    </top>
+    <bottom>
+        <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#UpdateClicked" text="Update" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+            <BorderPane.margin>
+                <Insets bottom="10.0" />
+            </BorderPane.margin>
+        </Button>
+    </bottom>
+    <left>
+        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="107.0" text="Generator Type" textFill="WHITE" translateX="20.0" translateY="-20.0" wrapText="true" BorderPane.alignment="CENTER">
+            <graphic>
+                <ChoiceBox fx:id="generator" prefWidth="150.0" scaleX="0.7" translateY="50.0" />
+            </graphic>
+        </Label>
+    </left>
+    <right>
+        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="117.0" text="Searching Algorithm" textFill="WHITE" translateX="-20.0" translateY="-20.0" wrapText="true" BorderPane.alignment="CENTER">
+            <graphic>
+                <ChoiceBox fx:id="searchingAlgorithm" prefWidth="150.0" scaleX="0.7" translateY="50.0" />
+            </graphic>
+        </Label>
+    </right>
+</BorderPane>

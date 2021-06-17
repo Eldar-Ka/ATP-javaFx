@@ -3,10 +3,6 @@
     -fx-background-size: stretch;
     -fx-background-position: center center;
 }
-Pane{
-    -fx-border-color: orange;
-    -fx-border-width:0.01in ;
-}
 
 
 Button {
