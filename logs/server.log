@@ -1,0 +1,21 @@
+2021.06.17 13:51:13.473 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (10,10).
+2021.06.17 13:51:34.681 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 asked to solve the maze useing: 
+2021.06.17 13:57:47.450 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (10,10).
+2021.06.17 13:57:49.109 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 asked to solve the maze useing: algorithms.search.BestFirstSearch@a724140algorithm, the solution is 19 steps
+2021.06.17 13:58:53.838 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (10,10).
+2021.06.17 13:58:55.929 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 asked to solve the maze useing: BestFirstSearchalgorithm, the solution is 36 steps
+2021.06.17 14:00:12.746 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (10,10).
+2021.06.17 14:00:17.134 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 asked to solve the maze useing: BestFirstSearchalgorithm, the solution is 10 steps
+2021.06.17 14:00:57.346 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (10,10).
+2021.06.17 14:01:00.126 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 asked to solve the maze useing: DepthFirstSearchalgorithm, the solution is 21 steps
+2021.06.17 14:01:27.503 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (10,10).
+2021.06.17 14:01:28.927 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 asked to solve the maze useing: DepthFirstSearchalgorithm, the solution is 17 steps
+2021.06.17 14:02:13.795 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 asked to solve the maze useing: BestFirstSearchalgorithm, the solution is 17 steps
+2021.06.17 14:02:41.658 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (100,100).
+2021.06.17 14:02:47.138 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 asked to solve the maze useing: BestFirstSearchalgorithm, the solution is 735 steps
+2021.06.17 14:03:20.491 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 asked to solve the maze useing: DepthFirstSearchalgorithm, the solution is 735 steps
+2021.06.17 14:03:29.897 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 asked to solve the maze useing: DepthFirstSearchalgorithm, the solution is 735 steps
+2021.06.17 14:03:50.185 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 asked to solve the maze useing: BreadthFirstSearchalgorithm, the solution is 735 steps
+2021.06.17 14:21:25.124 ERROR View.LoadController - couldn't fined the file named: test
+2021.06.17 14:22:14.141 ERROR View.LoadController - couldn't fined the file named: fghd
+2021.06.17 14:23:21.100 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (10,10).

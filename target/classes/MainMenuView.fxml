@@ -29,7 +29,7 @@
             <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="200.0" text="New Game" onAction="#newGame" GridPane.columnIndex="1" />
             <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="200.0" text="Load Game" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#loadGame"/>
             <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="200.0" text="Options" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#openConfigurations"/>
-            <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="200.0" text="Instructions" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="200.0" text="Instructions" GridPane.columnIndex="1" GridPane.rowIndex="3" onAction="#openInstructions" />
             <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="200.0" text="About Us" GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#About"/>
             <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="200.0" text="Exit" fx:id="closeButton" onAction="#handleCloseButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>

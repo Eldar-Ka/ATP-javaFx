@@ -8,11 +8,14 @@ import View.MyViewController;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.Position;
 import algorithms.search.AState;
+import algorithms.search.ISearchingAlgorithm;
 import algorithms.search.MazeState;
 import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.search.Solution;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -30,6 +33,8 @@ public class MyModel extends Observable implements IModel{
     private Server generatorServer;
     private Server solverServer;
     private boolean serversOn = false;
+    private final Logger logGen= LogManager.getLogger();
+    private final Logger logSol= LogManager.getLogger();
 
     public MyModel(){
         generatorServer = new Server(5400, 1000, new ServerStrategyGenerateMaze());
@@ -108,7 +113,11 @@ public class MyModel extends Observable implements IModel{
                         for (int i = 0; i < mazeSolutionSteps.size(); i++) {
                             System.out.println(String.format("%s. %s", i, mazeSolutionSteps.get(i).toString()));
                         }
+                        Configurations conf = Configurations.getInstance();
+                        ISearchingAlgorithm searchingAlgorithm = conf.getMazeSearchingAlgorithm();
+                        logSol.info("ClientIP: "+InetAddress.getLocalHost()+" asked to solve the maze using: "+searchingAlgorithm.getName()+ " algorithm, the solution is "+ mazeSolutionSteps.size()+" steps");
                     } catch (Exception e) { e.printStackTrace();
+                    logSol.error("couldn't communicat with server");
                     }
                 }
             });
@@ -208,6 +217,7 @@ public class MyModel extends Observable implements IModel{
                         is.read(decompressedMaze); //Fill decompressedMaze
                         maze = new Maze(decompressedMaze);
                         maze.print();
+                        logGen.info("ClientIP: "+InetAddress.getLocalHost()+" made maze in dimensions: ("+rows+","+cols+").");
                     } catch (Exception e) { e.printStackTrace();
                     }
                 }
@@ -215,6 +225,7 @@ public class MyModel extends Observable implements IModel{
             client.communicateWithServer();
         } catch (UnknownHostException e) {
             e.printStackTrace();
+            logSol.error("couldn't communicat with server");
         }
     }
     private void notifymovmet() {

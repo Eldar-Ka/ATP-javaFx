@@ -23,7 +23,7 @@ public class PropertiesController implements Initializable {
         searchingAlgorithm.getItems().addAll("BreadthFirstSearch","DepthFirstSearch", "BestFirstSearch");
         try{
             Properties properties = new Properties();
-            properties.load(new FileInputStream("resources/config.properties"));
+            properties.load(new FileInputStream("/resources/config.properties"));
 
             String a1= properties.getProperty("searchingAlgorithm");
             String a2= properties.getProperty("generator");

@@ -1,6 +1,5 @@
 package View;
 
-import Model.IModel;
 import Model.MyModel;
 import ViewModel.MyViewModel;
 import javafx.event.ActionEvent;
@@ -8,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
@@ -39,7 +37,7 @@ public class MenuController {
     public void openConfigurations() throws IOException {
         Stage stage = new Stage();
         stage.setTitle("Properties");
-        FXMLLoader propFXML = new FXMLLoader(getClass().getResource("/View/Properties.fxml"));
+        FXMLLoader propFXML = new FXMLLoader(getClass().getResource("/Properties.fxml"));
         Parent root = propFXML.load();
         PropertiesController propController = propFXML.getController();
         propController.setStage(stage);
@@ -54,7 +52,7 @@ public class MenuController {
             Stage stage = new Stage();
             stage.setTitle("About");
             FXMLLoader fxmlLoader = new FXMLLoader();
-            Parent root = fxmlLoader.load(getClass().getResource("About.fxml").openStream());
+            Parent root = fxmlLoader.load(getClass().getResource("/About.fxml").openStream());
             Scene scene = new Scene(root, 748, 400);
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
@@ -84,7 +82,7 @@ public class MenuController {
     public void newGame() throws IOException {
         mediaPlayer.stop();
 
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("MyView.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/MyView.fxml"));
         Parent root = fxmlLoader.load();
         ((Stage) closeButton.getScene().getWindow()).setScene(new Scene(root, 1000, 800));
 
@@ -94,13 +92,13 @@ public class MenuController {
 
         view=fxmlLoader.getController();
         view.setViewModel(viewModel);
-        MyViewController.playAudio("./resources/Mp3/StrangerThingsTitleSequence.mp3");
+        MyViewController.playAudio("src/main/resources/Mp3/StrangerThingsTitleSequence.mp3");
     }
 
     public void loadGame() throws Exception {
         Stage stage = new Stage();
         stage.setTitle("Load");
-        FXMLLoader loadFXML = new FXMLLoader(getClass().getResource("/View/LoadView.fxml"));
+        FXMLLoader loadFXML = new FXMLLoader(getClass().getResource("/LoadView.fxml"));
         Parent root = loadFXML.load();
         LoadController loadController = loadFXML.getController();
         loadController.setStage(stage);
@@ -110,6 +108,19 @@ public class MenuController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
         loadController.setMenuController(this);
+    }
+    public void openInstructions(ActionEvent actionEvent) throws IOException {
+        try {
+            Stage stage = new Stage();
+            stage.setTitle("Instructions");
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            Parent root = fxmlLoader.load(getClass().getResource("/HelpView.fxml").openStream());
+            Scene scene = new Scene(root, 600, 1025);
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL); //Lock the window until it closes
+            stage.show();
+        } catch (Exception e) {
+        }
     }
 
 }

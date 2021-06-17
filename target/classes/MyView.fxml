@@ -79,7 +79,7 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Help">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Instructions" />
+                                <MenuItem mnemonicParsing="false" text="Instructions" onAction="#openInstructions" />
                             </items></Menu>
                         <Menu mnemonicParsing="false" text="About">
                             <items>
@@ -102,7 +102,7 @@
                 <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
             </BorderPane.margin>
             <children>
-                <MazeDisplayer  disable="false" fx:id="mazeDisplayer" height="707.7" imageFileNameWin="./resources/Images/winner.jpg" imageFileNamePlayer="./resources/Images/red.jpg" imageFileNamePlayerL="./resources/Images/redL.jpg" imageFileNameWall="./resources/Images/wall.jpg" imageFileNameBall="./resources/Images/pokeball.jpg" onKeyPressed="#keyPressed" onMouseDragged="#mouseDragged" onScroll="#setOnScroll" width="772.3" BorderPane.alignment="CENTER" />
+                <MazeDisplayer  disable="false" fx:id="mazeDisplayer" height="707.7" imageFileNameWin="src/main/resources/Images/winner.jpg" imageFileNamePlayer="src/main/resources/Images/red.jpg" imageFileNamePlayerL="src/main/resources/Images/redL.jpg" imageFileNameWall="src/main/resources/Images/wall.jpg" imageFileNameBall="src/main/resources/Images/pokeball.jpg" onKeyPressed="#keyPressed" onMouseDragged="#mouseDragged" onScroll="#setOnScroll" width="772.3" BorderPane.alignment="CENTER" />
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

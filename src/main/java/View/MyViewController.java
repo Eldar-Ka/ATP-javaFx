@@ -7,7 +7,6 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
@@ -26,7 +25,6 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.transform.Scale;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -80,23 +78,38 @@ public class MyViewController extends MenuController implements IView, Observer,
 
     public void generateMaze() {
         if(!mute) {
-            Media media = new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
+            Media media = new Media(Paths.get("src/main/resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
             click = new MediaPlayer(media);
             click.play();
         }
+        if (textField_mazeRows.getText().trim().isEmpty()||textField_mazeColumns.getText().trim().isEmpty())
+        {
+            Alert alert=new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("dimensions are missing");
+            alert.setContentText("set maze rows and columns");
+            alert.show();
+        }
         int rows=Integer.parseInt(textField_mazeRows.getText());
         int cols=Integer.parseInt(textField_mazeColumns.getText());
-        btn_generateMaze.setDisable(true);
-        btn_solveMaze.setDisable(false);
-        viewModel.genMaze(rows,cols);
-
-
+        if (rows<2&&cols<2){
+            Alert alert=new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("maze cant be smaller then 2X2");
+            alert.setContentText("make the maze bigger");
+            alert.show();
+        }
+        else {
+            btn_generateMaze.setDisable(true);
+            btn_solveMaze.setDisable(false);
+            viewModel.genMaze(rows, cols);
+        }
     }
 
     public void loadMaze(String name) {
 
         if(!mute){
-            Media media = new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
+            Media media = new Media(Paths.get("src/main/resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
             click = new MediaPlayer(media);
             click.play();
         }
@@ -119,7 +132,7 @@ public class MyViewController extends MenuController implements IView, Observer,
         if (mazeDisplayer.getMatrix().length-1==row&&mazeDisplayer.getMatrix()[0].length-1==col)
         {
             mediaPlayer.stop();
-            Media media = new Media(Paths.get("./resources/Mp3/Victory.mp3").toUri().toString());
+            Media media = new Media(Paths.get("src/main/resources/Mp3/Victory.mp3").toUri().toString());
             vic = new MediaPlayer(media);
             vic.play();
             btn_solveMaze.setDisable(true);
@@ -146,7 +159,7 @@ public class MyViewController extends MenuController implements IView, Observer,
         }
     }
     private void mazeSolved() {
-        Media media = new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
+        Media media = new Media(Paths.get("src/main/resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
         click = new MediaPlayer(media);
         click.play();
         mazeDisplayer.setSol(viewModel.getSol());
@@ -201,7 +214,7 @@ public class MyViewController extends MenuController implements IView, Observer,
     }
     public static void onSetImage(){
         try {
-            FileInputStream input = new FileInputStream("resources/images/winner.jpg");
+            FileInputStream input = new FileInputStream("images/winner.jpg");
             Image image = new Image(input);
             imgView = new ImageView(image);
             //SET THE WHOLE IMAGE INTO IMAGEVIEW
@@ -215,14 +228,14 @@ public class MyViewController extends MenuController implements IView, Observer,
 
     public void MuteMusic(ActionEvent actionEvent) {
         if(!mute) {
-            Media media = new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
+            Media media = new Media(Paths.get("src/main/resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
             click = new MediaPlayer(media);
             click.play();
             mute = true;
             btn_mute.textProperty().setValue("UnMute");
             mediaPlayer.setVolume(0.0);
         }else{
-            Media media = new Media(Paths.get("./resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
+            Media media = new Media(Paths.get("src/main/resources/Mp3/MouseClickSoundEffect.mp3").toUri().toString());
             click = new MediaPlayer(media);
             click.play();
             mediaPlayer.setVolume(1.0);
@@ -235,7 +248,7 @@ public class MyViewController extends MenuController implements IView, Observer,
     public void saveGame() throws IOException {
         Stage stage = new Stage();
         stage.setTitle("SaveAs");
-        FXMLLoader saveFXML = new FXMLLoader(getClass().getResource("/View/SaveView.fxml"));
+        FXMLLoader saveFXML = new FXMLLoader(getClass().getResource("/SaveView.fxml"));
         Parent root = saveFXML.load();
         SaveController saveController = saveFXML.getController();
         saveController.setStage(stage);
@@ -268,4 +281,6 @@ public class MyViewController extends MenuController implements IView, Observer,
             scroll.consume();
         }
     }
+
+
 }
