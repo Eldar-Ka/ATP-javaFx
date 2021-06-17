@@ -19,3 +19,6 @@
 2021.06.17 14:21:25.124 ERROR View.LoadController - couldn't fined the file named: test
 2021.06.17 14:22:14.141 ERROR View.LoadController - couldn't fined the file named: fghd
 2021.06.17 14:23:21.100 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (10,10).
+2021.06.17 14:42:02.828 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (12,12).
+2021.06.17 14:42:07.043 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 asked to solve the maze using: BestFirstSearch algorithm, the solution is 12 steps
+2021.06.17 14:42:21.014 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 asked to solve the maze using: DepthFirstSearch algorithm, the solution is 12 steps
