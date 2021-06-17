@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="442.0" prefWidth="653.0" stylesheets="@MainStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.LoadController">
     <children>
-        <Label layoutX="294.0" layoutY="135.0" text="Name the file to load">
+        <Label layoutX="294.0" layoutY="135.0" textFill="#53ebe8" text="Name the file to load">
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding>
