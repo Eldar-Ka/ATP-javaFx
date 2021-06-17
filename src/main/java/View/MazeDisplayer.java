@@ -229,7 +229,7 @@ public class MazeDisplayer extends Canvas {
         } catch (FileNotFoundException e) {
             System.out.println("file missing");
         }
-        graphicsContext.drawImage(winImg,getHeight()/4,getWidth()/4,(getHeight()/4)*2.5,(getWidth()/4)*2.5);
+        graphicsContext.drawImage(winImg,getWidth()/4,getHeight()/4,(getWidth()/4)*2,(getHeight()/4)*2);
     }
 
     private void drawMazePlayer(GraphicsContext graphicsContext, double cellH, double cellW, String direction) {

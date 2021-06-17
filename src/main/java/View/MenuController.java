@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-public class MenuController {
+public class MenuController{
     public Button closeButton;
     public static MyViewModel viewModel;
     public static MediaPlayer mediaPlayer;

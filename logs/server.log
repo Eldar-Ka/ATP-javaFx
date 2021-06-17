@@ -22,3 +22,12 @@
 2021.06.17 14:42:02.828 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (12,12).
 2021.06.17 14:42:07.043 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 asked to solve the maze using: BestFirstSearch algorithm, the solution is 12 steps
 2021.06.17 14:42:21.014 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 asked to solve the maze using: DepthFirstSearch algorithm, the solution is 12 steps
+2021.06.17 14:55:46.874 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (10,10).
+2021.06.17 15:13:21.456 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (2,2).
+2021.06.17 15:32:54.031 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (2,2).
+2021.06.17 15:34:50.631 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (2,2).
+2021.06.17 15:35:20.799 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (2,2).
+2021.06.17 15:35:52.171 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (2,2).
+2021.06.17 15:36:27.096 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (2,2).
+2021.06.17 15:36:55.684 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (5,5).
+2021.06.17 15:37:11.431 INFO  Model.MyModel - ClientIP: DESKTOP-5N57GA0/192.168.43.1 made maze in dimensions: (10,10).
